@@ -2,6 +2,8 @@ import { INodeType, INodeTypeDescription, NodeConnectionType } from 'n8n-workflo
 
 import { organizationOperations, organizationFields } from './descriptions/OrganizationDescription';
 import { accountOperations, accountFields } from './descriptions/AccountDescription';
+import { actorOperations } from './descriptions/ActorDescription';
+import { agentOperations, agentFields } from './descriptions/AgentDescription';
 
 export class Huntress implements INodeType {
 	description: INodeTypeDescription = {
@@ -79,6 +81,9 @@ export class Huntress implements INodeType {
 			...organizationFields,
 			...accountOperations,
 			...accountFields,
+			...actorOperations,
+			...agentOperations,
+			...agentFields,
 		],
 	};
 }

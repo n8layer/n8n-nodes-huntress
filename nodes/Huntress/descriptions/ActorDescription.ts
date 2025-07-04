@@ -15,9 +15,9 @@ export const actorOperations: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: 'Get Account',
-				value: 'getAccount',
-				action: 'Get account by ID',
+				name: 'Get Actor',
+				value: 'getActor',
+				action: 'Get actor',
 				routing: {
 					request: {
 						method: 'GET',
@@ -26,6 +26,6 @@ export const actorOperations: INodeProperties[] = [
 				},
 			},
 		],
-		default: 'getAccount',
+		default: 'getActor',
 	},
 ];
