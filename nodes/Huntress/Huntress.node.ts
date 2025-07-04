@@ -1,7 +1,7 @@
 import { INodeType, INodeTypeDescription, NodeConnectionType } from 'n8n-workflow';
 
 import { organizationOperations, organizationFields } from './descriptions/OrganizationDescription';
-import { accountOperations } from './descriptions/AccountDescription';
+import { accountOperations, accountFields } from './descriptions/AccountDescription';
 
 export class Huntress implements INodeType {
 	description: INodeTypeDescription = {
@@ -78,6 +78,7 @@ export class Huntress implements INodeType {
 			...organizationOperations,
 			...organizationFields,
 			...accountOperations,
+			...accountFields,
 		],
 	};
 }

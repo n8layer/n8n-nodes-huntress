@@ -23,6 +23,22 @@ export const organizationOperations: INodeProperties[] = [
 						method: 'GET',
 						url: '=/organizations/{{$parameter["organizationId"]}}',
 					},
+					output: {
+						postReceive: [
+							{
+								type: 'setKeyValue',
+								properties: {
+									extractedOrganization: '={{ $parameter.extractOrganization ? $response.body.organization : [$response.body] }}',
+								},
+							},
+							{
+								type: 'rootProperty',
+								properties: {
+									property: 'extractedOrganization',
+								}
+							}
+						]
+					}
 				},
 			},
 			{
@@ -42,6 +58,22 @@ export const organizationOperations: INodeProperties[] = [
 							updated_at_max: '={{$parameter.updated_at_max || undefined}}',
 						},
 					},
+					output: {
+						postReceive: [
+							{
+								type: 'setKeyValue',
+								properties: {
+									extractedOrganizations: '={{ $parameter.extractOrganizations ? $response.body.organizations : [$response.body] }}',
+								},
+							},
+							{
+								type: 'rootProperty',
+								properties: {
+									property: 'extractedOrganizations',
+								}
+							}
+						]
+					}
 				},
 			},
 		],
@@ -144,5 +176,31 @@ export const organizationFields: INodeProperties[] = [
 		},
 		default: '',
 		description: 'An ISO8601 formatted date string representing the upper bound of the search range for the updated_at date. If provided with updated_at_min, updated_at_max must be greater than updated_at_min or a 400 error will occur.',
-	}
+	},
+	{
+		displayName: 'Extract Organizations',
+		name: 'extractOrganizations',
+		type: 'boolean',
+		displayOptions: {
+			show: {
+				resource: ['organization'],
+				operation: ['getMany'],
+			},
+		},
+		default: true,
+		description: 'Whether to extract the organization from the response',
+	},
+	{
+		displayName: 'Extract Organization',
+		name: 'extractOrganization',
+		type: 'boolean',
+		displayOptions: {
+			show: {
+				resource: ['organization'],
+				operation: ['getOrganization'],
+			},
+		},
+		default: true,
+		description: 'Whether to extract the organization from the response',
+	},
 ];
