@@ -15,6 +15,17 @@ export const organizationOperations: INodeProperties[] = [
 		},
 		options: [
 			{
+				name: 'Get Organization',
+				value: 'getOrganization',
+				action: 'Get organization by ID',
+				routing: {
+					request: {
+						method: 'GET',
+						url: '=/organizations/{{$parameter["organizationId"]}}',
+					},
+				},
+			},
+			{
 				name: 'Get Organizations',
 				value: 'getMany',
 				action: 'Get organizations',
@@ -39,6 +50,20 @@ export const organizationOperations: INodeProperties[] = [
 ];
 
 export const organizationFields: INodeProperties[] = [
+	{
+		displayName: 'Organization ID',
+		name: 'organizationId',
+		type: 'number',
+		required: true,
+		displayOptions: {
+			show: {
+				resource: ['organization'],
+				operation: ['getOrganization'],
+			},
+		},
+		default: '',
+		description: 'The ID of the organization to get',
+	},
 	{
 		displayName: 'Limit',
 		name: 'limit',
