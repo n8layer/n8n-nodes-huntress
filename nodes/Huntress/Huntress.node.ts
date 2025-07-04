@@ -1,6 +1,6 @@
 import { INodeType, INodeTypeDescription, NodeConnectionType } from 'n8n-workflow';
 
-import { customerOperations } from './descriptions/CustomerDescription';
+import { organizationOperations, organizationFields } from './descriptions/OrganizationDescription';
 
 export class Huntress implements INodeType {
 	description: INodeTypeDescription = {
@@ -71,10 +71,11 @@ export class Huntress implements INodeType {
 						value: 'signal',
 					},
 				],
-				default: 'customer',
+				default: 'organization',
 			},
 			// Operation
-			...customerOperations,
+			...organizationOperations,
+			...organizationFields,
 		],
 	};
 }
