@@ -6,7 +6,7 @@ export class Huntress implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'Huntress',
 		name: 'huntress',
-		icon: 'file:Huntress.png',
+		icon: 'file:Huntress.svg',
 		group: ['transform'],
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
@@ -39,40 +39,36 @@ export class Huntress implements INodeType {
 				noDataExpression: true,
 				options: [
 					{
-						name: 'Customer',
-						value: 'customer',
+						name: 'Account',
+						value: 'account',
 					},
 					{
-						name: 'Customer Catalog',
-						value: 'customerCatalog',
+						name: 'Actor',
+						value: 'actor',
 					},
 					{
-						name: 'Customer Platform',
-						value: 'customerPlatform',
+						name: 'Agent',
+						value: 'agent',
 					},
 					{
-						name: 'Order',
-						value: 'orders',
+						name: 'Billing Report',
+						value: 'billingReport',
 					},
 					{
-						name: 'Payable Charge',
-						value: 'payableCharge',
+						name: 'Incident Report',
+						value: 'incidentReport',
 					},
 					{
-						name: 'Platform',
-						value: 'platform',
+						name: 'Organization',
+						value: 'organization',
 					},
 					{
-						name: 'Receivable Charge',
-						value: 'receivableCharge',
+						name: 'Report',
+						value: 'report',
 					},
 					{
-						name: 'Subscription',
-						value: 'subscription',
-					},
-					{
-						name: 'Tracking',
-						value: 'tracking',
+						name: 'Signal',
+						value: 'signal',
 					},
 				],
 				default: 'customer',
