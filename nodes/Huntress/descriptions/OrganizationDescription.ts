@@ -25,10 +25,10 @@ export const organizationOperations: INodeProperties[] = [
 						qs: {
 							limit: '={{$parameter.limit}}',
 							page: '={{$parameter.page}}',
-							created_at_min: '={{$parameter.created_at_min}}',
-							created_at_max: '={{$parameter.created_at_max}}',
-							updated_at_min: '={{$parameter.updated_at_min}}',
-							updated_at_max: '={{$parameter.updated_at_max}}',
+							created_at_min: '={{$parameter.created_at_min || undefined}}',
+							created_at_max: '={{$parameter.created_at_max || undefined}}',
+							updated_at_min: '={{$parameter.updated_at_min || undefined}}',
+							updated_at_max: '={{$parameter.updated_at_max || undefined}}',
 						},
 					},
 				},
@@ -43,7 +43,6 @@ export const organizationFields: INodeProperties[] = [
 		displayName: 'Limit',
 		name: 'limit',
 		type: 'number',
-		required: true,
 		typeOptions: {
 			minValue: 1
 		},
@@ -60,7 +59,6 @@ export const organizationFields: INodeProperties[] = [
 		displayName: 'Page',
 		name: 'page',
 		type: 'number',
-		required: true,
 		displayOptions: {
 			show: {
 				resource: ['organization'],
@@ -74,7 +72,6 @@ export const organizationFields: INodeProperties[] = [
 		displayName: 'Created At Min',
 		name: 'created_at_min',
 		type: 'string',
-		required: true,
 		displayOptions: {
 			show: {
 				resource: ['organization'],
@@ -88,7 +85,6 @@ export const organizationFields: INodeProperties[] = [
 		displayName: 'Created At Max',
 		name: 'created_at_max',
 		type: 'string',
-		required: true,
 		displayOptions: {
 			show: {
 				resource: ['organization'],
@@ -102,7 +98,6 @@ export const organizationFields: INodeProperties[] = [
 		displayName: 'Updated At Min',
 		name: 'updated_at_min',
 		type: 'string',
-		required: true,
 		displayOptions: {
 			show: {
 				resource: ['organization'],
@@ -116,7 +111,6 @@ export const organizationFields: INodeProperties[] = [
 		displayName: 'Updated At Max',
 		name: 'updated_at_max',
 		type: 'string',
-		required: true,
 		displayOptions: {
 			show: {
 				resource: ['organization'],

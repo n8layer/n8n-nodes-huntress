@@ -19,7 +19,7 @@ export class Huntress implements INodeType {
 		usableAsTool: true,
 		credentials: [
 			{
-				name: 'huntressApi',
+				name: 'huntressBasicApi',
 				required: true,
 			},
 		],
