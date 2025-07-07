@@ -1,6 +1,6 @@
 import type { INodeProperties } from 'n8n-workflow';
 
-export const agentOperations: INodeProperties[] = [
+export const organizationOperations: INodeProperties[] = [
 	{
 		displayName: 'Operation',
 		name: 'operation',
@@ -9,32 +9,32 @@ export const agentOperations: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: [
-					'agent',
+					'organization',
 				],
 			},
 		},
 		options: [
 			{
-				name: 'Get Agent',
-				value: 'getAgent',
-				action: 'Get agent by ID',
+				name: 'Get Organization',
+				value: 'getOrganization',
+				action: 'Get organization by ID',
 				routing: {
 					request: {
 						method: 'GET',
-						url: '=/agents/{{$parameter["agentId"]}}',
+						url: '=/organizations/{{$parameter["organizationId"]}}',
 					},
 					output: {
 						postReceive: [
 							{
 								type: 'setKeyValue',
 								properties: {
-									extractedAgent: '={{ $parameter.extractAgent ? $response.body.agent : [$response.body] }}',
+									extractedOrganization: '={{ $parameter.extractOrganization ? $response.body.organization : [$response.body] }}',
 								},
 							},
 							{
 								type: 'rootProperty',
 								properties: {
-									property: 'extractedAgent',
+									property: 'extractedOrganization',
 								}
 							}
 						]
@@ -42,22 +42,20 @@ export const agentOperations: INodeProperties[] = [
 				},
 			},
 			{
-				name: 'Get Agents',
+				name: 'Get Organizations',
 				value: 'getMany',
-				action: 'Get agents',
+				action: 'Get organizations',
 				routing: {
 					request: {
 						method: 'GET',
-						url: '/agents',
+						url: '/organizations',
 						qs: {
 							limit: '={{$parameter.limit}}',
 							page: '={{$parameter.page}}',
-							organization_id: '={{$parameter.organizationId || undefined}}',
 							created_at_min: '={{$parameter.created_at_min || undefined}}',
 							created_at_max: '={{$parameter.created_at_max || undefined}}',
 							updated_at_min: '={{$parameter.updated_at_min || undefined}}',
 							updated_at_max: '={{$parameter.updated_at_max || undefined}}',
-							platform: '={{$parameter.platform}}',
 						},
 					},
 					output: {
@@ -65,13 +63,13 @@ export const agentOperations: INodeProperties[] = [
 							{
 								type: 'setKeyValue',
 								properties: {
-									extractedAgents: '={{ $parameter.extractAgents ? $response.body.agents : [$response.body] }}',
+									extractedOrganizations: '={{ $parameter.extractOrganizations ? $response.body.organizations : [$response.body] }}',
 								},
 							},
 							{
 								type: 'rootProperty',
 								properties: {
-									property: 'extractedAgents',
+									property: 'extractedOrganizations',
 								}
 							}
 						]
@@ -83,20 +81,20 @@ export const agentOperations: INodeProperties[] = [
 	},
 ];
 
-export const agentFields: INodeProperties[] = [
+export const organizationFields: INodeProperties[] = [
 	{
-		displayName: 'Agent ID',
-		name: 'agentId',
+		displayName: 'Organization ID',
+		name: 'organizationId',
 		type: 'number',
 		required: true,
 		displayOptions: {
 			show: {
-				resource: ['agent'],
-				operation: ['getAgent'],
+				resource: ['organization'],
+				operation: ['getOrganization'],
 			},
 		},
 		default: '',
-		description: 'The ID of the agent to get',
+		description: 'The ID of the organization to get',
 	},
 	{
 		displayName: 'Limit',
@@ -107,7 +105,7 @@ export const agentFields: INodeProperties[] = [
 		},
 		displayOptions: {
 			show: {
-				resource: ['agent'],
+				resource: ['organization'],
 				operation: ['getMany'],
 			},
 		},
@@ -120,7 +118,7 @@ export const agentFields: INodeProperties[] = [
 		type: 'number',
 		displayOptions: {
 			show: {
-				resource: ['agent'],
+				resource: ['organization'],
 				operation: ['getMany'],
 			},
 		},
@@ -128,25 +126,12 @@ export const agentFields: INodeProperties[] = [
 		description: 'The window location for the current resource. In conjunction with the limit field, shows results beginning with page * limit up to (page + 1) * limit. Must be an integer greater than 0 or a 400 error will occur.',
 	},
 	{
-		displayName: 'Organization ID',
-		name: 'organizationId',
-		type: 'number',
-		displayOptions: {
-			show: {
-				resource: ['agent'],
-				operation: ['getMany'],
-			},
-		},
-		default: '',
-		description: 'Filter by organization ID within Huntress account',
-	},
-	{
 		displayName: 'Created At Min',
 		name: 'created_at_min',
-		type: 'dateTime',
+		type: 'string',
 		displayOptions: {
 			show: {
-				resource: ['agent'],
+				resource: ['organization'],
 				operation: ['getMany'],
 			},
 		},
@@ -156,10 +141,10 @@ export const agentFields: INodeProperties[] = [
 	{
 		displayName: 'Created At Max',
 		name: 'created_at_max',
-		type: 'dateTime',
+		type: 'string',
 		displayOptions: {
 			show: {
-				resource: ['agent'],
+				resource: ['organization'],
 				operation: ['getMany'],
 			},
 		},
@@ -169,10 +154,10 @@ export const agentFields: INodeProperties[] = [
 	{
 		displayName: 'Updated At Min',
 		name: 'updated_at_min',
-		type: 'dateTime',
+		type: 'string',
 		displayOptions: {
 			show: {
-				resource: ['agent'],
+				resource: ['organization'],
 				operation: ['getMany'],
 			},
 		},
@@ -182,10 +167,10 @@ export const agentFields: INodeProperties[] = [
 	{
 		displayName: 'Updated At Max',
 		name: 'updated_at_max',
-		type: 'dateTime',
+		type: 'string',
 		displayOptions: {
 			show: {
-				resource: ['agent'],
+				resource: ['organization'],
 				operation: ['getMany'],
 			},
 		},
@@ -193,56 +178,29 @@ export const agentFields: INodeProperties[] = [
 		description: 'An ISO8601 formatted date string representing the upper bound of the search range for the updated_at date. If provided with updated_at_min, updated_at_max must be greater than updated_at_min or a 400 error will occur.',
 	},
 	{
-		displayName: 'Platform',
-		name: 'platform',
-		type: 'options',
-		displayOptions: {
-			show: {
-				resource: ['agent'],
-				operation: ['getMany'],
-			},
-		},
-		options: [
-			{
-				name: 'Windows',
-				value: 'windows',
-			},
-			{
-				name: 'Linux',
-				value: 'linux',
-			},
-			{
-				name: 'Darwin',
-				value: 'darwin',
-			},
-		],
-		default: 'windows',
-		description: 'Filter by platform of the agent',
-	},
-	{
-		displayName: 'Extract Agents',
-		name: 'extractAgents',
+		displayName: 'Extract Organizations',
+		name: 'extractOrganizations',
 		type: 'boolean',
 		displayOptions: {
 			show: {
-				resource: ['agent'],
+				resource: ['organization'],
 				operation: ['getMany'],
 			},
 		},
 		default: true,
-		description: 'Whether to extract the agents from the response',
+		description: 'Whether to extract the organization from the response',
 	},
 	{
-		displayName: 'Extract Agent',
-		name: 'extractAgent',
+		displayName: 'Extract Organization',
+		name: 'extractOrganization',
 		type: 'boolean',
 		displayOptions: {
 			show: {
-				resource: ['agent'],
-				operation: ['getAgent'],
+				resource: ['organization'],
+				operation: ['getOrganization'],
 			},
 		},
 		default: true,
-		description: 'Whether to extract the agent from the response',
+		description: 'Whether to extract the organization from the response',
 	},
 ];

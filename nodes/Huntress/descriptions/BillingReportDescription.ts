@@ -1,6 +1,6 @@
 import type { INodeProperties } from 'n8n-workflow';
 
-export const agentOperations: INodeProperties[] = [
+export const billingReportOperations: INodeProperties[] = [
 	{
 		displayName: 'Operation',
 		name: 'operation',
@@ -9,15 +9,15 @@ export const agentOperations: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: [
-					'agent',
+					'billingReport',
 				],
 			},
 		},
 		options: [
 			{
-				name: 'Get Agent',
-				value: 'getAgent',
-				action: 'Get agent by ID',
+				name: 'Get Billing Report',
+				value: 'getBillingReport',
+				action: 'Get billing report',
 				routing: {
 					request: {
 						method: 'GET',
@@ -52,12 +52,10 @@ export const agentOperations: INodeProperties[] = [
 						qs: {
 							limit: '={{$parameter.limit}}',
 							page: '={{$parameter.page}}',
-							organization_id: '={{$parameter.organizationId || undefined}}',
 							created_at_min: '={{$parameter.created_at_min || undefined}}',
 							created_at_max: '={{$parameter.created_at_max || undefined}}',
 							updated_at_min: '={{$parameter.updated_at_min || undefined}}',
 							updated_at_max: '={{$parameter.updated_at_max || undefined}}',
-							platform: '={{$parameter.platform}}',
 						},
 					},
 					output: {
@@ -128,22 +126,9 @@ export const agentFields: INodeProperties[] = [
 		description: 'The window location for the current resource. In conjunction with the limit field, shows results beginning with page * limit up to (page + 1) * limit. Must be an integer greater than 0 or a 400 error will occur.',
 	},
 	{
-		displayName: 'Organization ID',
-		name: 'organizationId',
-		type: 'number',
-		displayOptions: {
-			show: {
-				resource: ['agent'],
-				operation: ['getMany'],
-			},
-		},
-		default: '',
-		description: 'Filter by organization ID within Huntress account',
-	},
-	{
 		displayName: 'Created At Min',
 		name: 'created_at_min',
-		type: 'dateTime',
+		type: 'string',
 		displayOptions: {
 			show: {
 				resource: ['agent'],
@@ -156,7 +141,7 @@ export const agentFields: INodeProperties[] = [
 	{
 		displayName: 'Created At Max',
 		name: 'created_at_max',
-		type: 'dateTime',
+		type: 'string',
 		displayOptions: {
 			show: {
 				resource: ['agent'],
@@ -169,7 +154,7 @@ export const agentFields: INodeProperties[] = [
 	{
 		displayName: 'Updated At Min',
 		name: 'updated_at_min',
-		type: 'dateTime',
+		type: 'string',
 		displayOptions: {
 			show: {
 				resource: ['agent'],
@@ -182,7 +167,7 @@ export const agentFields: INodeProperties[] = [
 	{
 		displayName: 'Updated At Max',
 		name: 'updated_at_max',
-		type: 'dateTime',
+		type: 'string',
 		displayOptions: {
 			show: {
 				resource: ['agent'],
@@ -191,33 +176,6 @@ export const agentFields: INodeProperties[] = [
 		},
 		default: '',
 		description: 'An ISO8601 formatted date string representing the upper bound of the search range for the updated_at date. If provided with updated_at_min, updated_at_max must be greater than updated_at_min or a 400 error will occur.',
-	},
-	{
-		displayName: 'Platform',
-		name: 'platform',
-		type: 'options',
-		displayOptions: {
-			show: {
-				resource: ['agent'],
-				operation: ['getMany'],
-			},
-		},
-		options: [
-			{
-				name: 'Windows',
-				value: 'windows',
-			},
-			{
-				name: 'Linux',
-				value: 'linux',
-			},
-			{
-				name: 'Darwin',
-				value: 'darwin',
-			},
-		],
-		default: 'windows',
-		description: 'Filter by platform of the agent',
 	},
 	{
 		displayName: 'Extract Agents',
