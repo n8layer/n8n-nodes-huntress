@@ -21,20 +21,20 @@ export const billingReportOperations: INodeProperties[] = [
 				routing: {
 					request: {
 						method: 'GET',
-						url: '=/agents/{{$parameter["agentId"]}}',
+						url: '=/billing_reports/{{$parameter["billingReportId"]}}',
 					},
 					output: {
 						postReceive: [
 							{
 								type: 'setKeyValue',
 								properties: {
-									extractedAgent: '={{ $parameter.extractAgent ? $response.body.agent : [$response.body] }}',
+									extractedBillingReport: '={{ $parameter.extractBillingReport ? $response.body.billingReport : [$response.body] }}',
 								},
 							},
 							{
 								type: 'rootProperty',
 								properties: {
-									property: 'extractedAgent',
+									property: 'extractedBillingReport',
 								}
 							}
 						]
@@ -42,13 +42,13 @@ export const billingReportOperations: INodeProperties[] = [
 				},
 			},
 			{
-				name: 'Get Agents',
+				name: 'Get Billing Reports',
 				value: 'getMany',
-				action: 'Get agents',
+				action: 'Get billing reports',
 				routing: {
 					request: {
 						method: 'GET',
-						url: '/agents',
+						url: '/billing_reports',
 						qs: {
 							limit: '={{$parameter.limit}}',
 							page: '={{$parameter.page}}',
@@ -56,6 +56,7 @@ export const billingReportOperations: INodeProperties[] = [
 							created_at_max: '={{$parameter.created_at_max || undefined}}',
 							updated_at_min: '={{$parameter.updated_at_min || undefined}}',
 							updated_at_max: '={{$parameter.updated_at_max || undefined}}',
+							status: '={{$parameter.status}}',
 						},
 					},
 					output: {
@@ -63,13 +64,13 @@ export const billingReportOperations: INodeProperties[] = [
 							{
 								type: 'setKeyValue',
 								properties: {
-									extractedAgents: '={{ $parameter.extractAgents ? $response.body.agents : [$response.body] }}',
+									extractedBillingReports: '={{ $parameter.extractBillingReports ? $response.body.billingReports : [$response.body] }}',
 								},
 							},
 							{
 								type: 'rootProperty',
 								properties: {
-									property: 'extractedAgents',
+									property: 'extractedBillingReports',
 								}
 							}
 						]
@@ -81,20 +82,20 @@ export const billingReportOperations: INodeProperties[] = [
 	},
 ];
 
-export const agentFields: INodeProperties[] = [
+export const billingReportFields: INodeProperties[] = [
 	{
-		displayName: 'Agent ID',
-		name: 'agentId',
+		displayName: 'Billing Report ID',
+		name: 'billingReportId',
 		type: 'number',
 		required: true,
 		displayOptions: {
 			show: {
-				resource: ['agent'],
-				operation: ['getAgent'],
+				resource: ['billingReport'],
+				operation: ['getBillingReport'],
 			},
 		},
 		default: '',
-		description: 'The ID of the agent to get',
+		description: 'The ID of the billing report to get',
 	},
 	{
 		displayName: 'Limit',
@@ -105,7 +106,7 @@ export const agentFields: INodeProperties[] = [
 		},
 		displayOptions: {
 			show: {
-				resource: ['agent'],
+				resource: ['billingReport'],
 				operation: ['getMany'],
 			},
 		},
@@ -118,7 +119,7 @@ export const agentFields: INodeProperties[] = [
 		type: 'number',
 		displayOptions: {
 			show: {
-				resource: ['agent'],
+				resource: ['billingReport'],
 				operation: ['getMany'],
 			},
 		},
@@ -128,10 +129,10 @@ export const agentFields: INodeProperties[] = [
 	{
 		displayName: 'Created At Min',
 		name: 'created_at_min',
-		type: 'string',
+		type: 'dateTime',
 		displayOptions: {
 			show: {
-				resource: ['agent'],
+				resource: ['billingReport'],
 				operation: ['getMany'],
 			},
 		},
@@ -141,10 +142,10 @@ export const agentFields: INodeProperties[] = [
 	{
 		displayName: 'Created At Max',
 		name: 'created_at_max',
-		type: 'string',
+		type: 'dateTime',
 		displayOptions: {
 			show: {
-				resource: ['agent'],
+				resource: ['billingReport'],
 				operation: ['getMany'],
 			},
 		},
@@ -154,10 +155,10 @@ export const agentFields: INodeProperties[] = [
 	{
 		displayName: 'Updated At Min',
 		name: 'updated_at_min',
-		type: 'string',
+		type: 'dateTime',
 		displayOptions: {
 			show: {
-				resource: ['agent'],
+				resource: ['billingReport'],
 				operation: ['getMany'],
 			},
 		},
@@ -167,10 +168,10 @@ export const agentFields: INodeProperties[] = [
 	{
 		displayName: 'Updated At Max',
 		name: 'updated_at_max',
-		type: 'string',
+		type: 'dateTime',
 		displayOptions: {
 			show: {
-				resource: ['agent'],
+				resource: ['billingReport'],
 				operation: ['getMany'],
 			},
 		},
@@ -178,29 +179,72 @@ export const agentFields: INodeProperties[] = [
 		description: 'An ISO8601 formatted date string representing the upper bound of the search range for the updated_at date. If provided with updated_at_min, updated_at_max must be greater than updated_at_min or a 400 error will occur.',
 	},
 	{
-		displayName: 'Extract Agents',
-		name: 'extractAgents',
+		displayName: 'Extract Billing Reports',
+		name: 'extractBillingReports',
 		type: 'boolean',
 		displayOptions: {
 			show: {
-				resource: ['agent'],
+				resource: ['billingReport'],
 				operation: ['getMany'],
 			},
 		},
 		default: true,
-		description: 'Whether to extract the agents from the response',
+		description: 'Whether to extract the billing reports from the response',
 	},
 	{
-		displayName: 'Extract Agent',
-		name: 'extractAgent',
+		displayName: 'Extract Billing Report',
+		name: 'extractBillingReport',
 		type: 'boolean',
 		displayOptions: {
 			show: {
-				resource: ['agent'],
-				operation: ['getAgent'],
+				resource: ['billingReport'],
+				operation: ['getBillingReport'],
 			},
 		},
 		default: true,
-		description: 'Whether to extract the agent from the response',
+		description: 'Whether to extract the billing report from the response',
+	},
+	{
+		displayName: 'Status',
+		name: 'status',
+		type: 'options',
+		displayOptions: {
+			show: {
+				resource: ['billingReport'],
+				operation: ['getMany'],
+			},
+		},
+		options: [
+			{
+				name: 'Draft',
+				value: 'draft',
+			},
+			{
+				name: 'Failed',
+				value: 'failed',
+			},
+			{
+				name: 'Full Refund',
+				value: 'full_refund',
+			},
+			{
+				name: 'Open',
+				value: 'open',
+			},
+			{
+				name: 'Paid',
+				value: 'paid',
+			},
+			{
+				name: 'Partial Refund',
+				value: 'partial_refund',
+			},
+			{
+				name: 'Voided',
+				value: 'voided',
+			},
+		],
+		default: 'open',
+		description: 'Filter by status. One of open, paid, failed, partial_refund, full_refund, draft, voided.',
 	},
 ];
