@@ -167,12 +167,12 @@ export const incidentReportFields: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: 'Antivirus Detection',
-				value: 'antivirus_detection',
+				name: 'Antivirus Detections',
+				value: 'antivirus_detections',
 			},
 			{
-				name: 'Favicon Detection',
-				value: 'favicon_detection',
+				name: 'Favicon Detections',
+				value: 'favicon_detections',
 			},
 			{
 				name: 'Footholds',
@@ -183,23 +183,23 @@ export const incidentReportFields: INodeProperties[] = [
 				value: 'managed_identity',
 			},
 			{
-				name: 'MDE Detection',
-				value: 'mde_detection',
+				name: 'MDE Detections',
+				value: 'mde_detections',
 			},
 			{
-				name: 'Process Detection',
-				value: 'process_detection',
+				name: 'Process Detections',
+				value: 'process_detections',
 			},
 			{
-				name: 'Ransomware Canary',
-				value: 'ransomware_canary',
+				name: 'Ransomware Canaries',
+				value: 'ransomware_canaries',
 			},
 			{
-				name: 'SIEM Detection',
-				value: 'siem_detection',
+				name: 'SIEM Detections',
+				value: 'siem_detections',
 			},
 		],
-		default: '',
+		default: 'antivirus_detections',
 		description: 'Filter by indicator type. One of footholds, monitored_files, ransomware_canaries, antivirus_detections, process_detections, managed_identity, mde_detections, siem_detections, favicon_detections.',
 	},
 	{
@@ -234,7 +234,7 @@ export const incidentReportFields: INodeProperties[] = [
 				value: 'sent',
 			},
 		],
-		default: '',
+		default: 'closed',
 		description: 'Filter by status. One of sent, closed, dismissed, auto_remediating, deleting.',
 	},
 	{
@@ -300,7 +300,7 @@ export const incidentReportFields: INodeProperties[] = [
 				value: 'windows',
 			},
 		],
-		default: '',
+		default: 'windows',
 		description: 'Filter by platform. One of windows, darwin, microsoft_365, google, linux, other.',
 	},
 	{

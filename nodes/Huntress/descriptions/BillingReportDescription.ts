@@ -218,7 +218,7 @@ export const billingReportFields: INodeProperties[] = [
 				value: 'voided',
 			},
 		],
-		default: '',
+		default: 'open',
 		description: 'Filter by status. One of open, paid, failed, partial_refund, full_refund, draft, voided.',
 	},
 	{

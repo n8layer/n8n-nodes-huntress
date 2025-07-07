@@ -216,7 +216,7 @@ export const agentFields: INodeProperties[] = [
 				value: 'windows',
 			},
 		],
-		default: '',
+		default: 'windows',
 		description: 'Filter by platform of the agent',
 	},
 	{
