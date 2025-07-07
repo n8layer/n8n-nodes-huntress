@@ -129,7 +129,7 @@ export const billingReportFields: INodeProperties[] = [
 	{
 		displayName: 'Created At Min',
 		name: 'created_at_min',
-		type: 'dateTime',
+		type: 'string',
 		displayOptions: {
 			show: {
 				resource: ['billingReport'],
@@ -142,7 +142,7 @@ export const billingReportFields: INodeProperties[] = [
 	{
 		displayName: 'Created At Max',
 		name: 'created_at_max',
-		type: 'dateTime',
+		type: 'string',
 		displayOptions: {
 			show: {
 				resource: ['billingReport'],
@@ -155,7 +155,7 @@ export const billingReportFields: INodeProperties[] = [
 	{
 		displayName: 'Updated At Min',
 		name: 'updated_at_min',
-		type: 'dateTime',
+		type: 'string',
 		displayOptions: {
 			show: {
 				resource: ['billingReport'],
@@ -168,7 +168,7 @@ export const billingReportFields: INodeProperties[] = [
 	{
 		displayName: 'Updated At Max',
 		name: 'updated_at_max',
-		type: 'dateTime',
+		type: 'string',
 		displayOptions: {
 			show: {
 				resource: ['billingReport'],

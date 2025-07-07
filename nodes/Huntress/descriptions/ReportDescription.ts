@@ -132,7 +132,7 @@ export const reportFields: INodeProperties[] = [
 	{
 		displayName: 'Created At Min',
 		name: 'created_at_min',
-		type: 'dateTime',
+		type: 'string',
 		displayOptions: {
 			show: {
 				resource: ['report'],
@@ -145,7 +145,7 @@ export const reportFields: INodeProperties[] = [
 	{
 		displayName: 'Created At Max',
 		name: 'created_at_max',
-		type: 'dateTime',
+		type: 'string',
 		displayOptions: {
 			show: {
 				resource: ['report'],
@@ -158,7 +158,7 @@ export const reportFields: INodeProperties[] = [
 	{
 		displayName: 'Updated At Min',
 		name: 'updated_at_min',
-		type: 'dateTime',
+		type: 'string',
 		displayOptions: {
 			show: {
 				resource: ['report'],
@@ -171,7 +171,7 @@ export const reportFields: INodeProperties[] = [
 	{
 		displayName: 'Updated At Max',
 		name: 'updated_at_max',
-		type: 'dateTime',
+		type: 'string',
 		displayOptions: {
 			show: {
 				resource: ['report'],
@@ -184,7 +184,7 @@ export const reportFields: INodeProperties[] = [
 	{
 		displayName: 'Period Min',
 		name: 'period_min',
-		type: 'dateTime',
+		type: 'string',
 		displayOptions: {
 			show: {
 				resource: ['report'],
@@ -197,7 +197,7 @@ export const reportFields: INodeProperties[] = [
 	{
 		displayName: 'Period Max',
 		name: 'period_max',
-		type: 'dateTime',
+		type: 'string',
 		displayOptions: {
 			show: {
 				resource: ['report'],

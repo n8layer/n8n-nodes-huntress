@@ -113,7 +113,7 @@ export const incidentReportFields: INodeProperties[] = [
 				operation: ['getMany'],
 			},
 		},
-		default: 50,
+		default: 10,
 		description: 'Max number of results to return',
 	},
 	{
@@ -132,7 +132,7 @@ export const incidentReportFields: INodeProperties[] = [
 	{
 		displayName: 'Updated At Min',
 		name: 'updated_at_min',
-		type: 'dateTime',
+		type: 'string',
 		displayOptions: {
 			show: {
 				resource: ['incidentReport'],
@@ -145,7 +145,7 @@ export const incidentReportFields: INodeProperties[] = [
 	{
 		displayName: 'Updated At Max',
 		name: 'updated_at_max',
-		type: 'dateTime',
+		type: 'string',
 		displayOptions: {
 			show: {
 				resource: ['incidentReport'],
