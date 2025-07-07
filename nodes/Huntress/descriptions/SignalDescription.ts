@@ -114,7 +114,7 @@ export const signalFields: INodeProperties[] = [
 				operation: ['getMany'],
 			},
 		},
-		default: 50,
+		default: 10,
 		description: 'Max number of results to return',
 	},
 	{
