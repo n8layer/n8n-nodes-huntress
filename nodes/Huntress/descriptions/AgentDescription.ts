@@ -204,19 +204,19 @@ export const agentFields: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: 'Windows',
-				value: 'windows',
+				name: 'Darwin',
+				value: 'darwin',
 			},
 			{
 				name: 'Linux',
 				value: 'linux',
 			},
 			{
-				name: 'Darwin',
-				value: 'darwin',
+				name: 'Windows',
+				value: 'windows',
 			},
 		],
-		default: 'windows',
+		default: '',
 		description: 'Filter by platform of the agent',
 	},
 	{

@@ -5,6 +5,7 @@ import { accountOperations, accountFields } from './descriptions/AccountDescript
 import { actorOperations } from './descriptions/ActorDescription';
 import { agentOperations, agentFields } from './descriptions/AgentDescription';
 import { billingReportOperations, billingReportFields } from './descriptions/BillingReportDescription';
+import { incidentReportOperations, incidentReportFields } from './descriptions/IncidentReport';
 
 export class Huntress implements INodeType {
 	description: INodeTypeDescription = {
@@ -87,6 +88,8 @@ export class Huntress implements INodeType {
 			...agentFields,
 			...billingReportOperations,
 			...billingReportFields,
+			...incidentReportOperations,
+			...incidentReportFields,
 		],
 	};
 }

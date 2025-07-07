@@ -1,6 +1,6 @@
 import type { INodeProperties } from 'n8n-workflow';
 
-export const organizationOperations: INodeProperties[] = [
+export const incidentReportOperations: INodeProperties[] = [
 	{
 		displayName: 'Operation',
 		name: 'operation',
@@ -9,32 +9,32 @@ export const organizationOperations: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: [
-					'organization',
+					'incidentReport',
 				],
 			},
 		},
 		options: [
 			{
-				name: 'Get Organization',
-				value: 'getOrganization',
-				action: 'Get organization by ID',
+				name: 'Get Incident Report',
+				value: 'getIncidentReport',
+				action: 'Get incident report',
 				routing: {
 					request: {
 						method: 'GET',
-						url: '=/organizations/{{$parameter["organizationId"]}}',
+						url: '=/incident_reports/{{$parameter["incidentReportId"]}}',
 					},
 					output: {
 						postReceive: [
 							{
 								type: 'setKeyValue',
 								properties: {
-									extractedOrganization: '={{ $parameter.extractOrganization ? $response.body.organization : [$response.body] }}',
+									extractedIncidentReport: '={{ $parameter.extractIncidentReport ? $response.body.incidentReport : [$response.body] }}',
 								},
 							},
 							{
 								type: 'rootProperty',
 								properties: {
-									property: 'extractedOrganization',
+									property: 'extractedIncidentReport',
 								}
 							}
 						]
@@ -42,20 +42,24 @@ export const organizationOperations: INodeProperties[] = [
 				},
 			},
 			{
-				name: 'Get Organizations',
+				name: 'Get Incident Reports',
 				value: 'getMany',
-				action: 'Get organizations',
+				action: 'Get incident reports',
 				routing: {
 					request: {
 						method: 'GET',
-						url: '/organizations',
+						url: '/incident_reports',
 						qs: {
 							limit: '={{$parameter.limit}}',
 							page: '={{$parameter.page}}',
-							created_at_min: '={{$parameter.created_at_min || undefined}}',
-							created_at_max: '={{$parameter.created_at_max || undefined}}',
 							updated_at_min: '={{$parameter.updated_at_min || undefined}}',
 							updated_at_max: '={{$parameter.updated_at_max || undefined}}',
+							indicator_type: '={{$parameter.indicatorType}}',
+							status: '={{$parameter.status}}',
+							severity: '={{$parameter.severity}}',
+							platform: '={{$parameter.platform}}',
+							organization_id: '={{$parameter.organizationId}}',
+							agent_id: '={{$parameter.agentId}}',
 						},
 					},
 					output: {
@@ -63,13 +67,13 @@ export const organizationOperations: INodeProperties[] = [
 							{
 								type: 'setKeyValue',
 								properties: {
-									extractedOrganizations: '={{ $parameter.extractOrganizations ? $response.body.organizations : [$response.body] }}',
+									extractedIncidentReports: '={{ $parameter.extractIncidentReports ? $response.body.incidentReports : [$response.body] }}',
 								},
 							},
 							{
 								type: 'rootProperty',
 								properties: {
-									property: 'extractedOrganizations',
+									property: 'extractedIncidentReports',
 								}
 							}
 						]
@@ -81,20 +85,20 @@ export const organizationOperations: INodeProperties[] = [
 	},
 ];
 
-export const organizationFields: INodeProperties[] = [
+export const incidentReportFields: INodeProperties[] = [
 	{
-		displayName: 'Organization ID',
-		name: 'organizationId',
+		displayName: 'Incident Report ID',
+		name: 'incidentReportId',
 		type: 'number',
 		required: true,
 		displayOptions: {
 			show: {
-				resource: ['organization'],
-				operation: ['getOrganization'],
+				resource: ['incidentReport'],
+				operation: ['getIncidentReport'],
 			},
 		},
 		default: '',
-		description: 'The ID of the organization to get',
+		description: 'The ID of the incident report to get',
 	},
 	{
 		displayName: 'Limit',
@@ -105,7 +109,7 @@ export const organizationFields: INodeProperties[] = [
 		},
 		displayOptions: {
 			show: {
-				resource: ['organization'],
+				resource: ['incidentReport'],
 				operation: ['getMany'],
 			},
 		},
@@ -118,7 +122,7 @@ export const organizationFields: INodeProperties[] = [
 		type: 'number',
 		displayOptions: {
 			show: {
-				resource: ['organization'],
+				resource: ['incidentReport'],
 				operation: ['getMany'],
 			},
 		},
@@ -126,38 +130,12 @@ export const organizationFields: INodeProperties[] = [
 		description: 'The window location for the current resource. In conjunction with the limit field, shows results beginning with page * limit up to (page + 1) * limit. Must be an integer greater than 0 or a 400 error will occur.',
 	},
 	{
-		displayName: 'Created At Min',
-		name: 'created_at_min',
-		type: 'string',
-		displayOptions: {
-			show: {
-				resource: ['organization'],
-				operation: ['getMany'],
-			},
-		},
-		default: '',
-		description: 'An ISO8601 formatted date string representing the lower bound of the search range for the created_at date. Must provide a date greater than January 1st, 2010 or a 400 error will occur.',
-	},
-	{
-		displayName: 'Created At Max',
-		name: 'created_at_max',
-		type: 'string',
-		displayOptions: {
-			show: {
-				resource: ['organization'],
-				operation: ['getMany'],
-			},
-		},
-		default: '',
-		description: 'An ISO8601 formatted date string representing the upper bound of the search range for the created_at date. If provided with created_at_min, created_at_max must be greater than created_at_min or a 400 error will occur.',
-	},
-	{
 		displayName: 'Updated At Min',
 		name: 'updated_at_min',
-		type: 'string',
+		type: 'dateTime',
 		displayOptions: {
 			show: {
-				resource: ['organization'],
+				resource: ['incidentReport'],
 				operation: ['getMany'],
 			},
 		},
@@ -167,10 +145,10 @@ export const organizationFields: INodeProperties[] = [
 	{
 		displayName: 'Updated At Max',
 		name: 'updated_at_max',
-		type: 'string',
+		type: 'dateTime',
 		displayOptions: {
 			show: {
-				resource: ['organization'],
+				resource: ['incidentReport'],
 				operation: ['getMany'],
 			},
 		},
@@ -178,29 +156,203 @@ export const organizationFields: INodeProperties[] = [
 		description: 'An ISO8601 formatted date string representing the upper bound of the search range for the updated_at date. If provided with updated_at_min, updated_at_max must be greater than updated_at_min or a 400 error will occur.',
 	},
 	{
-		displayName: 'Extract Organizations',
-		name: 'extractOrganizations',
+		displayName: 'Indicator Type',
+		name: 'indicatorType',
+		type: 'options',
+		displayOptions: {
+			show: {
+				resource: ['incidentReport'],
+				operation: ['getMany'],
+			},
+		},
+		options: [
+			{
+				name: 'Antivirus Detection',
+				value: 'antivirus_detection',
+			},
+			{
+				name: 'Favicon Detection',
+				value: 'favicon_detection',
+			},
+			{
+				name: 'Footholds',
+				value: 'footholds',
+			},
+			{
+				name: 'Managed Identity',
+				value: 'managed_identity',
+			},
+			{
+				name: 'MDE Detection',
+				value: 'mde_detection',
+			},
+			{
+				name: 'Process Detection',
+				value: 'process_detection',
+			},
+			{
+				name: 'Ransomware Canary',
+				value: 'ransomware_canary',
+			},
+			{
+				name: 'SIEM Detection',
+				value: 'siem_detection',
+			},
+		],
+		default: '',
+		description: 'Filter by indicator type. One of footholds, monitored_files, ransomware_canaries, antivirus_detections, process_detections, managed_identity, mde_detections, siem_detections, favicon_detections.',
+	},
+	{
+		displayName: 'Status',
+		name: 'status',
+		type: 'options',
+		displayOptions: {
+			show: {
+				resource: ['incidentReport'],
+				operation: ['getMany'],
+			},
+		},
+		options: [
+			{
+				name: 'Auto Remediating',
+				value: 'auto_remediating',
+			},
+			{
+				name: 'Closed',
+				value: 'closed',
+			},
+			{
+				name: 'Deleting',
+				value: 'deleting',
+			},
+			{
+				name: 'Dismissed',
+				value: 'dismissed',
+			},
+			{
+				name: 'Sent',
+				value: 'sent',
+			},
+		],
+		default: '',
+		description: 'Filter by status. One of sent, closed, dismissed, auto_remediating, deleting.',
+	},
+	{
+		displayName: 'Severity',
+		name: 'severity',
+		type: 'options',
+		displayOptions: {
+			show: {
+				resource: ['incidentReport'],
+				operation: ['getMany'],
+			},
+		},
+		options: [
+			{
+				name: 'Critical',
+				value: 'critical',
+			},
+			{
+				name: 'High',
+				value: 'high',
+			},
+			{
+				name: 'Low',
+				value: 'low',
+			},
+		],
+		default: 'low',
+		description: 'Filter by severity. One of low, high, critical.',
+	},
+	{
+		displayName: 'Platform',
+		name: 'platform',
+		type: 'options',
+		displayOptions: {
+			show: {
+				resource: ['incidentReport'],
+				operation: ['getMany'],
+			},
+		},
+		options: [
+			{
+				name: 'Darwin',
+				value: 'darwin',
+			},
+			{
+				name: 'Google',
+				value: 'google',
+			},
+			{
+				name: 'Linux',
+				value: 'linux',
+			},
+			{
+				name: 'Microsoft 365',
+				value: 'microsoft_365',
+			},
+			{
+				name: 'Other',
+				value: 'other',
+			},
+			{
+				name: 'Windows',
+				value: 'windows',
+			},
+		],
+		default: '',
+		description: 'Filter by platform. One of windows, darwin, microsoft_365, google, linux, other.',
+	},
+	{
+		displayName: 'Organization ID',
+		name: 'organizationId',
+		type: 'number',
+		displayOptions: {
+			show: {
+				resource: ['incidentReport'],
+				operation: ['getMany'],
+			},
+		},
+		default: '',
+		description: 'Filter by organization ID within Huntress account',
+	},
+	{
+		displayName: 'Agent ID',
+		name: 'agentId',
+		type: 'number',
+		displayOptions: {
+			show: {
+				resource: ['incidentReport'],
+				operation: ['getMany'],
+			},
+		},
+		default: '',
+		description: 'Filter by organization ID within Huntress account',
+	},
+	{
+		displayName: 'Extract Incident Reports',
+		name: 'extractIncidentReports',
 		type: 'boolean',
 		displayOptions: {
 			show: {
-				resource: ['organization'],
+				resource: ['incidentReport'],
 				operation: ['getMany'],
 			},
 		},
 		default: true,
-		description: 'Whether to extract the organization from the response',
+		description: 'Whether to extract the incident reports from the response',
 	},
 	{
-		displayName: 'Extract Organization',
-		name: 'extractOrganization',
+		displayName: 'Extract Incident Report',
+		name: 'extractIncidentReport',
 		type: 'boolean',
 		displayOptions: {
 			show: {
-				resource: ['organization'],
-				operation: ['getOrganization'],
+				resource: ['incidentReport'],
+				operation: ['getIncidentReport'],
 			},
 		},
 		default: true,
-		description: 'Whether to extract the organization from the response',
+		description: 'Whether to extract the incident report from the response',
 	},
 ];

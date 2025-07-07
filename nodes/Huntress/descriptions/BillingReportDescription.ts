@@ -179,32 +179,6 @@ export const billingReportFields: INodeProperties[] = [
 		description: 'An ISO8601 formatted date string representing the upper bound of the search range for the updated_at date. If provided with updated_at_min, updated_at_max must be greater than updated_at_min or a 400 error will occur.',
 	},
 	{
-		displayName: 'Extract Billing Reports',
-		name: 'extractBillingReports',
-		type: 'boolean',
-		displayOptions: {
-			show: {
-				resource: ['billingReport'],
-				operation: ['getMany'],
-			},
-		},
-		default: true,
-		description: 'Whether to extract the billing reports from the response',
-	},
-	{
-		displayName: 'Extract Billing Report',
-		name: 'extractBillingReport',
-		type: 'boolean',
-		displayOptions: {
-			show: {
-				resource: ['billingReport'],
-				operation: ['getBillingReport'],
-			},
-		},
-		default: true,
-		description: 'Whether to extract the billing report from the response',
-	},
-	{
 		displayName: 'Status',
 		name: 'status',
 		type: 'options',
@@ -244,7 +218,33 @@ export const billingReportFields: INodeProperties[] = [
 				value: 'voided',
 			},
 		],
-		default: 'open',
+		default: '',
 		description: 'Filter by status. One of open, paid, failed, partial_refund, full_refund, draft, voided.',
+	},
+	{
+		displayName: 'Extract Billing Reports',
+		name: 'extractBillingReports',
+		type: 'boolean',
+		displayOptions: {
+			show: {
+				resource: ['billingReport'],
+				operation: ['getMany'],
+			},
+		},
+		default: true,
+		description: 'Whether to extract the billing reports from the response',
+	},
+	{
+		displayName: 'Extract Billing Report',
+		name: 'extractBillingReport',
+		type: 'boolean',
+		displayOptions: {
+			show: {
+				resource: ['billingReport'],
+				operation: ['getBillingReport'],
+			},
+		},
+		default: true,
+		description: 'Whether to extract the billing report from the response',
 	},
 ];
