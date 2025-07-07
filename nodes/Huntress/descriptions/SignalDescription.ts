@@ -1,6 +1,6 @@
 import type { INodeProperties } from 'n8n-workflow';
 
-export const reportOperations: INodeProperties[] = [
+export const signalOperations: INodeProperties[] = [
 	{
 		displayName: 'Operation',
 		name: 'operation',
@@ -9,32 +9,32 @@ export const reportOperations: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: [
-					'report',
+					'signal',
 				],
 			},
 		},
 		options: [
 			{
-				name: 'Get Report',
-				value: 'getReport',
-				action: 'Get report',
+				name: 'Get Signal',
+				value: 'getSignal',
+				action: 'Get signal',
 				routing: {
 					request: {
 						method: 'GET',
-						url: '=/reports/{{$parameter["reportId"]}}',
+						url: '=/signals/{{$parameter["signalId"]}}',
 					},
 					output: {
 						postReceive: [
 							{
 								type: 'setKeyValue',
 								properties: {
-									extractedReport: '={{ $parameter.extractReport ? $response.body.report : [$response.body] }}',
+									extractedSignal: '={{ $parameter.extractSignal ? $response.body.signal : [$response.body] }}',
 								},
 							},
 							{
 								type: 'rootProperty',
 								properties: {
-									property: 'extractedReport',
+									property: 'extractedSignal',
 								}
 							}
 						]
@@ -42,13 +42,13 @@ export const reportOperations: INodeProperties[] = [
 				},
 			},
 			{
-				name: 'Get Reports',
+				name: 'Get Signals',
 				value: 'getMany',
-				action: 'Get reports',
+				action: 'Get signals',
 				routing: {
 					request: {
 						method: 'GET',
-						url: '/reports',
+						url: '/signals',
 						qs: {
 							limit: '={{$parameter.limit}}',
 							page: '={{$parameter.page}}',
@@ -56,10 +56,11 @@ export const reportOperations: INodeProperties[] = [
 							created_at_max: '={{$parameter.created_at_max || undefined}}',
 							updated_at_min: '={{$parameter.updated_at_min || undefined}}',
 							updated_at_max: '={{$parameter.updated_at_max || undefined}}',
-							period_min: '={{$parameter.period_min || undefined}}',
-							period_max: '={{$parameter.period_max || undefined}}',
+							investigated_at_min: '={{$parameter.investigated_at_min || undefined}}',
+							investigated_at_max: '={{$parameter.investigated_at_max || undefined}}',
 							organization_id: '={{$parameter.organization_id}}',
-							type: '={{$parameter.type}}',
+							types: '={{$parameter.types}}',
+							statuses: '={{$parameter.statuses}}',
 						},
 					},
 					output: {
@@ -67,13 +68,13 @@ export const reportOperations: INodeProperties[] = [
 							{
 								type: 'setKeyValue',
 								properties: {
-									extractedReports: '={{ $parameter.extractReports ? $response.body.reports : [$response.body] }}',
+									extractedSignals: '={{ $parameter.extractSignals ? $response.body.signals : [$response.body] }}',
 								},
 							},
 							{
 								type: 'rootProperty',
 								properties: {
-									property: 'extractedReports',
+									property: 'extractedSignals',
 								}
 							}
 						]
@@ -85,20 +86,20 @@ export const reportOperations: INodeProperties[] = [
 	},
 ];
 
-export const reportFields: INodeProperties[] = [
+export const signalFields: INodeProperties[] = [
 	{
-		displayName: 'Report ID',
-		name: 'reportId',
+		displayName: 'Signal ID',
+		name: 'signalId',
 		type: 'number',
 		required: true,
 		displayOptions: {
 			show: {
-				resource: ['report'],
-				operation: ['getReport'],
+				resource: ['signal'],
+				operation: ['getSignal'],
 			},
 		},
 		default: '',
-		description: 'The ID of the report to get',
+		description: 'The ID of the signal to get',
 	},
 	{
 		displayName: 'Limit',
@@ -109,7 +110,7 @@ export const reportFields: INodeProperties[] = [
 		},
 		displayOptions: {
 			show: {
-				resource: ['report'],
+				resource: ['signal'],
 				operation: ['getMany'],
 			},
 		},
@@ -122,7 +123,7 @@ export const reportFields: INodeProperties[] = [
 		type: 'number',
 		displayOptions: {
 			show: {
-				resource: ['billingReport'],
+				resource: ['signal'],
 				operation: ['getMany'],
 			},
 		},
@@ -135,7 +136,7 @@ export const reportFields: INodeProperties[] = [
 		type: 'dateTime',
 		displayOptions: {
 			show: {
-				resource: ['report'],
+				resource: ['signal'],
 				operation: ['getMany'],
 			},
 		},
@@ -148,7 +149,7 @@ export const reportFields: INodeProperties[] = [
 		type: 'dateTime',
 		displayOptions: {
 			show: {
-				resource: ['report'],
+				resource: ['signal'],
 				operation: ['getMany'],
 			},
 		},
@@ -161,7 +162,7 @@ export const reportFields: INodeProperties[] = [
 		type: 'dateTime',
 		displayOptions: {
 			show: {
-				resource: ['report'],
+				resource: ['signal'],
 				operation: ['getMany'],
 			},
 		},
@@ -174,7 +175,7 @@ export const reportFields: INodeProperties[] = [
 		type: 'dateTime',
 		displayOptions: {
 			show: {
-				resource: ['report'],
+				resource: ['signal'],
 				operation: ['getMany'],
 			},
 		},
@@ -182,57 +183,56 @@ export const reportFields: INodeProperties[] = [
 		description: 'An ISO8601 formatted date string representing the upper bound of the search range for the updated_at date. If provided with updated_at_min, updated_at_max must be greater than updated_at_min or a 400 error will occur.',
 	},
 	{
-		displayName: 'Period Min',
-		name: 'period_min',
+		displayName: 'Investigated At Min',
+		name: 'investigated_at_min',
 		type: 'dateTime',
 		displayOptions: {
 			show: {
-				resource: ['report'],
+				resource: ['signal'],
 				operation: ['getMany'],
 			},
 		},
 		default: '',
-		description: 'An ISO860 formatted date string representing the lower bound of a filter window on the period field. Returns summary reports where the upper bound of the period is greater than period_min. If provided in conjunction with period_max, if period_max is less than period_min, a 400 error is returned.'
+		description: 'An ISO860 formatted date string representing the lower bound of a filter window on the investigated_at field. Returns signals where the upper bound of the investigated_at is greater than investigated_at_min. If provided in conjunction with investigated_at_max, if investigated_at_max is less than investigated_at_min, a 400 error is returned.'
 	},
 	{
-		displayName: 'Period Max',
-		name: 'period_max',
+		displayName: 'Investigated At Max',
+		name: 'investigated_at_max',
 		type: 'dateTime',
 		displayOptions: {
 			show: {
-				resource: ['report'],
+				resource: ['signal'],
 				operation: ['getMany'],
 			},
 		},
 		default: '',
-		description: 'An ISO860 formatted date string representing the upper bound of a filter window on the period field. Returns summary reports where the lower bound of the period is less than period_max.'
+		description: 'An ISO860 formatted date string representing the upper bound of a filter window on the investigated_at field. Returns signals where the lower bound of the investigated_at is less than investigated_at_max.'
 	},
 	{
-		displayName: 'Type',
-		name: 'type',
-		type: 'options',
+		displayName: 'Types',
+		name: 'types',
+		type: 'string',
 		displayOptions: {
 			show: {
-				resource: ['report'],
+				resource: ['signal'],
 				operation: ['getMany'],
 			},
 		},
-		options: [
-			{
-				name: 'Monthly Summary',
-				value: 'monthly_summary',
+		default: '',
+		description: 'Filter by the types of Signal, must be comma-separated string containing the values',
+	},
+	{
+		displayName: 'Statuses',
+		name: 'statuses',
+		type: 'string',
+		displayOptions: {
+			show: {
+				resource: ['signal'],
+				operation: ['getMany'],
 			},
-			{
-				name: 'Quarterly Summary',
-				value: 'quarterly_summary',
-			},
-			{
-				name: 'Yearly Summary',
-				value: 'yearly_summary',
-			},
-		],
-		default: 'monthly_summary',
-		description: 'Filter by report type. One of monthly_summary, quarterly_summary, yearly_summary.',
+		},
+		default: '',
+		description: 'Filter by the statuses of Signal, must be comma-separated string containing the values',
 	},
 	{
 		displayName: 'Organization ID',
@@ -240,7 +240,7 @@ export const reportFields: INodeProperties[] = [
 		type: 'number',
 		displayOptions: {
 			show: {
-				resource: ['report'],
+				resource: ['signal'],
 				operation: ['getMany'],
 			},
 		},
@@ -248,29 +248,29 @@ export const reportFields: INodeProperties[] = [
 		description: 'Filter by organization ID within Huntress account',
 	},
 	{
-		displayName: 'Extract Reports',
-		name: 'extractReports',
+		displayName: 'Extract Signals',
+		name: 'extractSignals',
 		type: 'boolean',
 		displayOptions: {
 			show: {
-				resource: ['report'],
+				resource: ['signal'],
 				operation: ['getMany'],
 			},
 		},
 		default: true,
-		description: 'Whether to extract the billing reports from the response',
+		description: 'Whether to extract the signals from the response',
 	},
 	{
-		displayName: 'Extract Report',
-		name: 'extractReport',
+		displayName: 'Extract Signal',
+		name: 'extractSignal',
 		type: 'boolean',
 		displayOptions: {
 			show: {
-				resource: ['report'],
-				operation: ['getReport'],
+				resource: ['signal'],
+				operation: ['getSignal'],
 			},
 		},
 		default: true,
-		description: 'Whether to extract the billing report from the response',
+		description: 'Whether to extract the signal from the response',
 	},
 ];
