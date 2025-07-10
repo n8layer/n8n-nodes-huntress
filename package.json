@@ -1,5 +1,5 @@
 {
-  "name": "n8n-nodes-huntress",
+  "name": "@n8layer/n8n-nodes-huntress",
   "version": "0.1.0",
   "description": "This is an n8n community node. It lets you use Huntress in your n8n workflows.",
   "keywords": [
@@ -10,6 +10,9 @@
   "author": {
     "name": "n8layer",
     "email": "support@n8layer.io"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "repository": {
     "type": "git",
