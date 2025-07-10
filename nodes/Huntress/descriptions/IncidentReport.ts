@@ -113,7 +113,7 @@ export const incidentReportFields: INodeProperties[] = [
 				operation: ['getMany'],
 			},
 		},
-		default: 10,
+		default: 50,
 		description: 'Max number of results to return',
 	},
 	{
