@@ -49,16 +49,16 @@ export const agentOperations: INodeProperties[] = [
 					request: {
 						method: 'GET',
 						url: '/agents',
-						qs: {
-							limit: '={{$parameter.limit}}',
-							page: '={{$parameter.page}}',
-							organization_id: '={{$parameter.organizationId || undefined}}',
-							created_at_min: '={{$parameter.created_at_min || undefined}}',
-							created_at_max: '={{$parameter.created_at_max || undefined}}',
-							updated_at_min: '={{$parameter.updated_at_min || undefined}}',
-							updated_at_max: '={{$parameter.updated_at_max || undefined}}',
-							platform: '={{$parameter.platform}}',
-						},
+											qs: {
+						limit: '={{$parameter.limit}}',
+						page: '={{$parameter.page}}',
+						organization_id: '={{$parameter.organizationId || undefined}}',
+						created_at_min: '={{$parameter.created_at_min || undefined}}',
+						created_at_max: '={{$parameter.created_at_max || undefined}}',
+						updated_at_min: '={{$parameter.updated_at_min || undefined}}',
+						updated_at_max: '={{$parameter.updated_at_max || undefined}}',
+						platform: '={{$parameter.platform || undefined}}',
+					},
 					},
 					output: {
 						postReceive: [
@@ -204,6 +204,10 @@ export const agentFields: INodeProperties[] = [
 		},
 		options: [
 			{
+				name: 'All Platforms',
+				value: '',
+			},
+			{
 				name: 'Darwin',
 				value: 'darwin',
 			},
@@ -216,8 +220,8 @@ export const agentFields: INodeProperties[] = [
 				value: 'windows',
 			},
 		],
-		default: 'windows',
-		description: 'Filter by platform of the agent',
+		default: '',
+		description: 'Filter by platform of the agent. Select "All Platforms" to include all platforms.',
 	},
 	{
 		displayName: 'Extract Agents',
