@@ -42,9 +42,9 @@ export const organizationOperations: INodeProperties[] = [
 				},
 			},
 			{
-				name: 'Get Organizations',
+				name: 'List Organizations',
 				value: 'getMany',
-				action: 'Get organizations',
+				action: 'List organizations',
 				routing: {
 					request: {
 						method: 'GET',

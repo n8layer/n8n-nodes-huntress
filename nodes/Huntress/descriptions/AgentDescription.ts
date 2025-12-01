@@ -42,22 +42,22 @@ export const agentOperations: INodeProperties[] = [
 				},
 			},
 			{
-				name: 'Get Agents',
+				name: 'List Agents',
 				value: 'getMany',
-				action: 'Get agents',
+				action: 'List agents',
 				routing: {
 					request: {
 						method: 'GET',
 						url: '/agents',
-											qs: {
-						limit: '={{$parameter.limit}}',
-						page: '={{$parameter.page}}',
-						organization_id: '={{$parameter.organizationId || undefined}}',
-						created_at_min: '={{$parameter.created_at_min || undefined}}',
-						created_at_max: '={{$parameter.created_at_max || undefined}}',
-						updated_at_min: '={{$parameter.updated_at_min || undefined}}',
-						updated_at_max: '={{$parameter.updated_at_max || undefined}}',
-						platform: '={{$parameter.platform || undefined}}',
+						qs: {
+							limit: '={{$parameter.limit}}',
+							page: '={{$parameter.page}}',
+							organization_id: '={{$parameter.organizationId || undefined}}',
+							created_at_min: '={{$parameter.created_at_min || undefined}}',
+							created_at_max: '={{$parameter.created_at_max || undefined}}',
+							updated_at_min: '={{$parameter.updated_at_min || undefined}}',
+							updated_at_max: '={{$parameter.updated_at_max || undefined}}',
+							platform: '={{$parameter.platform || undefined}}',
 					},
 					},
 					output: {

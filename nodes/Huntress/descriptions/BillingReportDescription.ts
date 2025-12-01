@@ -28,7 +28,7 @@ export const billingReportOperations: INodeProperties[] = [
 							{
 								type: 'setKeyValue',
 								properties: {
-									extractedBillingReport: '={{ $parameter.extractBillingReport ? $response.body.billingReport : [$response.body] }}',
+									extractedBillingReport: '={{ $parameter.extractBillingReport ? $response.body.billing_report : [$response.body] }}',
 								},
 							},
 							{
@@ -42,9 +42,9 @@ export const billingReportOperations: INodeProperties[] = [
 				},
 			},
 			{
-				name: 'Get Billing Reports',
+				name: 'List Billing Reports',
 				value: 'getMany',
-				action: 'Get billing reports',
+				action: 'List billing reports',
 				routing: {
 					request: {
 						method: 'GET',
@@ -64,7 +64,7 @@ export const billingReportOperations: INodeProperties[] = [
 							{
 								type: 'setKeyValue',
 								properties: {
-									extractedBillingReports: '={{ $parameter.extractBillingReports ? $response.body.billingReports : [$response.body] }}',
+									extractedBillingReports: '={{ $parameter.extractBillingReports ? $response.body.billing_reports : [$response.body] }}',
 								},
 							},
 							{

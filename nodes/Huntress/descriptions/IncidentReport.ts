@@ -15,6 +15,18 @@ export const incidentReportOperations: INodeProperties[] = [
 		},
 		options: [
 			{
+				name: 'Create Incident Report Resolution',
+				value: 'createIncidentReportResolution',
+				action: 'Create incident report resolution',
+				description: 'Create a resolution for an incident report. All remediations belonging to the Incident Report must be approved first.',
+				routing: {
+					request: {
+						method: 'POST',
+						url: '=/incident_reports/{{$parameter["incidentReportId"]}}/resolutions',
+					},
+				},
+			},
+			{
 				name: 'Get Incident Report',
 				value: 'getIncidentReport',
 				action: 'Get incident report',
@@ -42,9 +54,9 @@ export const incidentReportOperations: INodeProperties[] = [
 				},
 			},
 			{
-				name: 'Get Incident Reports',
+				name: 'List Incident Reports',
 				value: 'getMany',
-				action: 'Get incident reports',
+				action: 'List incident reports',
 				routing: {
 					request: {
 						method: 'GET',
@@ -54,12 +66,12 @@ export const incidentReportOperations: INodeProperties[] = [
 							page: '={{$parameter.page}}',
 							updated_at_min: '={{$parameter.updated_at_min || undefined}}',
 							updated_at_max: '={{$parameter.updated_at_max || undefined}}',
-							indicator_type: '={{$parameter.indicatorType}}',
-							status: '={{$parameter.status}}',
-							severity: '={{$parameter.severity}}',
-							platform: '={{$parameter.platform}}',
-							organization_id: '={{$parameter.organizationId}}',
-							agent_id: '={{$parameter.agentId}}',
+							indicator_type: '={{$parameter.indicatorType || undefined}}',
+							status: '={{$parameter.status || undefined}}',
+							severity: '={{$parameter.severity || undefined}}',
+							platform: '={{$parameter.platform || undefined}}',
+							organization_id: '={{$parameter.organizationId || undefined}}',
+							agent_id: '={{$parameter.agentId || undefined}}',
 						},
 					},
 					output: {
@@ -67,7 +79,7 @@ export const incidentReportOperations: INodeProperties[] = [
 							{
 								type: 'setKeyValue',
 								properties: {
-									extractedIncidentReports: '={{ $parameter.extractIncidentReports ? $response.body.incidentReports : [$response.body] }}',
+									extractedIncidentReports: '={{ $parameter.extractIncidentReports ? $response.body.incident_reports : [$response.body] }}',
 								},
 							},
 							{
@@ -94,7 +106,7 @@ export const incidentReportFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['incidentReport'],
-				operation: ['getIncidentReport'],
+				operation: ['getIncidentReport', 'createIncidentReportResolution'],
 			},
 		},
 		default: '',
@@ -167,6 +179,10 @@ export const incidentReportFields: INodeProperties[] = [
 		},
 		options: [
 			{
+				name: 'All Indicator Types',
+				value: '',
+			},
+			{
 				name: 'Antivirus Detections',
 				value: 'antivirus_detections',
 			},
@@ -199,7 +215,7 @@ export const incidentReportFields: INodeProperties[] = [
 				value: 'siem_detections',
 			},
 		],
-		default: 'antivirus_detections',
+		default: '',
 		description: 'Filter by indicator type. One of footholds, monitored_files, ransomware_canaries, antivirus_detections, process_detections, managed_identity, mde_detections, siem_detections, favicon_detections.',
 	},
 	{
@@ -213,6 +229,10 @@ export const incidentReportFields: INodeProperties[] = [
 			},
 		},
 		options: [
+			{
+				name: 'All Statuses',
+				value: '',
+			},
 			{
 				name: 'Auto Remediating',
 				value: 'auto_remediating',
@@ -234,7 +254,7 @@ export const incidentReportFields: INodeProperties[] = [
 				value: 'sent',
 			},
 		],
-		default: 'closed',
+		default: '',
 		description: 'Filter by status. One of sent, closed, dismissed, auto_remediating, deleting.',
 	},
 	{
@@ -249,6 +269,10 @@ export const incidentReportFields: INodeProperties[] = [
 		},
 		options: [
 			{
+				name: 'All Severities',
+				value: '',
+			},
+			{
 				name: 'Critical',
 				value: 'critical',
 			},
@@ -261,7 +285,7 @@ export const incidentReportFields: INodeProperties[] = [
 				value: 'low',
 			},
 		],
-		default: 'low',
+		default: '',
 		description: 'Filter by severity. One of low, high, critical.',
 	},
 	{
@@ -275,6 +299,10 @@ export const incidentReportFields: INodeProperties[] = [
 			},
 		},
 		options: [
+			{
+				name: 'All Platforms',
+				value: '',
+			},
 			{
 				name: 'Darwin',
 				value: 'darwin',
@@ -300,7 +328,7 @@ export const incidentReportFields: INodeProperties[] = [
 				value: 'windows',
 			},
 		],
-		default: 'windows',
+		default: '',
 		description: 'Filter by platform. One of windows, darwin, microsoft_365, google, linux, other.',
 	},
 	{

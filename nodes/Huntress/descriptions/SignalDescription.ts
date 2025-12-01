@@ -42,9 +42,9 @@ export const signalOperations: INodeProperties[] = [
 				},
 			},
 			{
-				name: 'Get Signals',
+				name: 'List Signals',
 				value: 'getMany',
-				action: 'Get signals',
+				action: 'List signals',
 				routing: {
 					request: {
 						method: 'GET',

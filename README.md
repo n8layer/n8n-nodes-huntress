@@ -28,27 +28,39 @@ This node supports the following resources and operations:
 
 ### Agent
 - **Get Agent**: Retrieve a specific agent by ID
-- **Get Agents**: Retrieve multiple agents with filtering options (by organization, platform, date ranges)
+- **List Agents**: Retrieve multiple agents with filtering options (by organization, platform, date ranges)
 
 ### Billing Report
 - **Get Billing Report**: Retrieve a specific billing report by ID
-- **Get Billing Reports**: Retrieve multiple billing reports with filtering options
+- **List Billing Reports**: Retrieve multiple billing reports with filtering options
+
+### Escalation
+- **Get Escalation**: Retrieve a specific escalation by ID
+- **List Escalations**: Retrieve multiple escalations with pagination
+- **Create Escalation Resolution**: Create a resolution for an escalation
 
 ### Incident Report
 - **Get Incident Report**: Retrieve a specific incident report by ID
-- **Get Incident Reports**: Retrieve multiple incident reports with filtering options (by status, severity, platform, organization, agent, indicator type, date ranges)
+- **List Incident Reports**: Retrieve multiple incident reports with filtering options (by status, severity, platform, organization, agent, indicator type, date ranges)
+- **Create Incident Resolution**: Use this endpoint to resolve a single Incident Report. All remediations belonging to the Incident Report must be approved first.
 
 ### Organization
 - **Get Organization**: Retrieve a specific organization by ID
-- **Get Organizations**: Retrieve multiple organizations with filtering options (by date ranges)
+- **List Organizations**: Retrieve multiple organizations with filtering options (by date ranges)
 
 ### Report
 - **Get Report**: Retrieve a specific report by ID
-- **Get Reports**: Retrieve multiple reports with filtering options
+- **List Reports**: Retrieve multiple reports with filtering options
+
+### Remediation
+- **Get Remediation**: Retrieve a specific remediation by ID for an incident report
+- **List Remediations**: Retrieve multiple remediations for an incident report with filtering options (by type, status, pagination)
+- **Bulk Approve Remediations**: Approve multiple remediations for an incident report
+- **Bulk Deny Remediations**: Deny multiple remediations for an incident report
 
 ### Signal
 - **Get Signal**: Retrieve a specific signal by ID
-- **Get Signals**: Retrieve multiple signals with filtering options
+- **List Signals**: Retrieve multiple signals with filtering options
 
 All "Get Many" operations support pagination and various filtering options including date ranges, organization filtering, and platform-specific filtering.
 

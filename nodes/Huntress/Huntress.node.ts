@@ -8,6 +8,8 @@ import { billingReportOperations, billingReportFields } from './descriptions/Bil
 import { incidentReportOperations, incidentReportFields } from './descriptions/IncidentReport';
 import { reportOperations, reportFields } from './descriptions/ReportDescription';
 import { signalOperations, signalFields } from './descriptions/SignalDescription';
+import { remediationFields, remediationOperations } from './descriptions/RemediationDescription';
+import { escalationFields, escalationOperations } from './descriptions/EscalationDescription';
 
 export class Huntress implements INodeType {
 	description: INodeTypeDescription = {
@@ -62,12 +64,20 @@ export class Huntress implements INodeType {
 						value: 'billingReport',
 					},
 					{
+						name: 'Escalation',
+						value: 'escalation',
+					},
+					{
 						name: 'Incident Report',
 						value: 'incidentReport',
 					},
 					{
 						name: 'Organization',
 						value: 'organization',
+					},
+					{
+						name: 'Remediation',
+						value: 'remediation',
 					},
 					{
 						name: 'Report',
@@ -90,8 +100,12 @@ export class Huntress implements INodeType {
 			...agentFields,
 			...billingReportOperations,
 			...billingReportFields,
+			...escalationOperations,
+			...escalationFields,
 			...incidentReportOperations,
 			...incidentReportFields,
+			...remediationOperations,
+			...remediationFields,
 			...reportOperations,
 			...reportFields,
 			...signalOperations,
